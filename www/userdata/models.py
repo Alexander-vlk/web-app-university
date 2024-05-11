@@ -26,8 +26,8 @@ class UserProgrammingLanguages(models.Model):
 
 class UserDataModel(models.Model):
 	GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('М', 'Мужской'),
+        ('Ж', 'Женский'),
     ]
 
 	fio = models.CharField(max_length=255, validators=[validate_fio_format], verbose_name='ФИО')
@@ -35,7 +35,7 @@ class UserDataModel(models.Model):
 						  verbose_name='Номер телефона')
 	email = models.EmailField(max_length=100, validators=[validate_email], verbose_name='Электронная почта')
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name='Пол')
-	birth = models.DateField(validators=[validate_date], verbose_name='Дата рождения') 
+	birth = models.DateField(validators=[validate_date], verbose_name='Дата рождения') 	
 	user_langs = models.ManyToManyField(UserProgrammingLanguages, verbose_name='Любимые языки программирования')
 	biography = models.TextField(verbose_name='Биография')
 

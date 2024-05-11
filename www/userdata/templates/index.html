@@ -1,11 +1,24 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="{% static 'style.css' %}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>WebSite</title>
 	</head>
 	<body>
-		<h1>Hello, user!</h1>
+		<header>
+			<h1>Hello, user!</h1>
+		</header>
+		<main>
+			<form method="post">
+				{% csrf_token %} {{ form.as_p }}
+				<label for="checkbox">С контрактом ознакомлен</label>
+				<input type="checkbox" name="checkbox" id="" />
+				<button type="submit">Отправить</button>
+			</form>
+		</main>
 	</body>
 </html>
