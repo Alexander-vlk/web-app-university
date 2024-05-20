@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}{% block title %}Log in{% endblock %}{% block body%}
+<header>
+	<h1>Авторизация</h1>
+</header>
+<main>
+	{% if user.is_authenticated %}
+	<h1>Вы уже авторизованы!</h1>
+	<a href="{% url 'home' %}">Перейдите по этой ссылке</a>
+	{% else %}
+	<form method="post">
+		{% csrf_token %} {{form.as_p}}
+		<button type="submit">Войти</button>
+	</form>
+	{% endif %}
+</main>
+{% endblock %}

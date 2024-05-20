@@ -1,24 +1,18 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="{% static 'style.css' %}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>WebSite</title>
-	</head>
-	<body>
-		<header>
-			<h1>Hello, user!</h1>
-		</header>
-		<main>
-			<form method="post">
-				{% csrf_token %} {{ form.as_p }}
-				<label for="checkbox">С контрактом ознакомлен</label>
-				<input type="checkbox" name="checkbox" id="" />
-				<button type="submit">Отправить</button>
-			</form>
-		</main>
-	</body>
-</html>
+{% extends 'layout.html' %}{% block title %}Форма{% endblock %}{% block body %}
+<header>
+	{% if user.is_authenticated %}
+	<h1>Hello, {{request.user}}!</h1>
+	<a href="{% url 'logout' %}">Выйти</a>
+	{% else %}
+	<h1>hello</h1>
+	{% endif %}
+</header>
+<main>
+	<form method="post">
+		{% csrf_token %} {{ form.as_p }}
+		<label for="checkbox">С контрактом ознакомлен</label>
+		<input type="checkbox" name="checkbox" id="" />
+		<button type="submit">Отправить</button>
+	</form>
+</main>
+{% endblock %}

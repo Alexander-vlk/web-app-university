@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}{% block title %}Sign in{% endblock %}{% block body%}
+<header>
+	<h1>Регистрация</h1>
+</header>
+<main>
+	<h1>Reg</h1>
+	<form method="post">
+		{% csrf_token %} {{form.as_p }}
+		<button type="submit">Отправить</button>
+	</form>
+</main>
+{% endblock %}

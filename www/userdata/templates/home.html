@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}{% block title %}Главная{% endblock %}{% block body%}
+<header>
+	<h1>Home</h1>
+</header>
+<main>
+	<a href="{% url 'login' %}">Войти</a>
+	<a href="{% url 'register' %}">Зарегистрироваться</a>
+	<a href="{% url 'home' %}">форма</a>
+</main>
+{% endblock %}
