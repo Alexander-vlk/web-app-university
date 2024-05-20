@@ -1,4 +1,5 @@
-{% extends 'layout.html' %}{% block title %}Форма{% endblock %}{% block body %}
+{% extends 'layout.html'%}{% block title %}Форма{% endblock %} {% block body %}
+
 <header>
 	{% if user.is_authenticated %}
 	<h1>Hello, {{request.user}}!</h1>
@@ -8,11 +9,29 @@
 	{% endif %}
 </header>
 <main>
-	<form method="post">
+	<form method="post" class="user_data_form">
 		{% csrf_token %} {{ form.as_p }}
 		<label for="checkbox">С контрактом ознакомлен</label>
 		<input type="checkbox" name="checkbox" id="" />
 		<button type="submit">Отправить</button>
 	</form>
+
+	<section class="user_added_fields">
+		{% if user.is_authenticated %}
+		<h2>Добавленные данные:</h2>
+		<ul>
+			{% for i in user_items %}
+			<li class="user_added_field">
+				<p>{{i}}</p>
+				<a href="{% url 'data' i.pk %}">Редактировать</a>
+				<form method="post" action="{% url 'delete' i.pk %}">
+					{% csrf_token %}
+					<button type="submit">Удалить</button>
+				</form>
+			</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</section>
 </main>
 {% endblock %}

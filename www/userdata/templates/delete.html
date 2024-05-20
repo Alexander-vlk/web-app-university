@@ -1,0 +1,11 @@
+{% extends 'layout.html'%}{% block title %}Форма{% endblock %} {% block body %}
+
+<main>
+	<section class="user_added_fields">
+		{% if user.is_authenticated %}
+		<h2>Успешно удалено</h2>
+		<a href="{% url 'home' %}">Вернуться</a>
+		{% endif %}
+	</section>
+</main>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
 
 
 from .validators import validate_fio_format, validate_email, validate_date
@@ -38,6 +39,8 @@ class UserDataModel(models.Model):
 	birth = models.DateField(validators=[validate_date], verbose_name='Дата рождения') 	
 	user_langs = models.ManyToManyField(UserProgrammingLanguages, verbose_name='Любимые языки программирования')
 	biography = models.TextField(verbose_name='Биография')
+
+	creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 	def __str__(self):
 		return f'{self.fio}, {self.phone}, {self.email}'

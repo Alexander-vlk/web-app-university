@@ -1,12 +1,13 @@
 from django.urls import reverse_lazy
 from django.shortcuts import render
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
 
+from .models import UserDataModel
 from .forms import UserDataForm, AuthUserForm, UserRegisterForm
 
 def home_page(request):
@@ -17,6 +18,12 @@ class UserDataView(FormView):
 	template_name = 'index.html'
 	form_class = UserDataForm
 	success_url = '/web_4'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		user_items = UserDataModel.objects.filter(creator=self.request.user)
+		context['user_items'] = user_items
+		return context
 	
 	def get_initial(self):
 		initial = super().get_initial()
@@ -28,13 +35,15 @@ class UserDataView(FormView):
 		return initial
 
 	def form_valid(self, form):
+		
 		response = super().form_valid(form)
 		response.set_cookie('phone', form.cleaned_data['phone'], max_age=80)
 		response.set_cookie('email', form.cleaned_data['email'], max_age=80)
+		form.instance.creator = self.request.user
 		form.save()
 
 		return response
-
+	
 
 class UserLoginView(LoginView):
 	template_name = 'login.html'
@@ -57,7 +66,20 @@ class UserLogoutView(LogoutView):
 	def get_success_url(self):
 		return self.get_redirect_url() or self.get_default_redirect_url()
 	
+
 def logout_view(request):
     logout(request)
     # Перенаправление на главную страницу или другую страницу после выхода
     return redirect('web_4/')
+
+
+class UpdateUserDataView(UpdateView):
+	model = UserDataModel
+	form_class = UserDataForm
+	template_name = 'edit.html'
+	success_url = '/web_4'
+
+class DeleteUserDataView(DeleteView):
+	model = UserDataModel
+	success_url = '/web_4'
+	template_name = 'delete.html'

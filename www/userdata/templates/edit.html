@@ -1,0 +1,15 @@
+{% extends 'layout.html'%}{% block title %}Форма{% endblock %} {% block body %}
+
+<header></header>
+<main>
+	{% if user.is_authenticated %}
+	<h1>Редактирование</h1>
+	<form method="post" class="user_data_form">
+		{% csrf_token %} {{ form.as_p }}
+		<label for="checkbox">С контрактом ознакомлен</label>
+		<input type="checkbox" name="checkbox" id="" />
+		<button type="submit">Отправить</button>
+	</form>
+	{% endif %}
+</main>
+{% endblock %}
