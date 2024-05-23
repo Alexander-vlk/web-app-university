@@ -1,8 +1,10 @@
 {% extends 'layout.html'%}{% block title %}Форма{% endblock %} {% block body %}
-
 <header>
 	{% if user.is_authenticated %}
 	<h1>Hello, {{request.user}}!</h1>
+	{% if request.user.is_superuser %}
+	<a href="{% url 'admin' %}">Админ-панель</a>
+	{% endif %}
 	<a href="{% url 'logout' %}">Выйти</a>
 	{% else %}
 	<h1>hello</h1>

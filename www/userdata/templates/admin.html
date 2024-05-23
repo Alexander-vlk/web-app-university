@@ -1,0 +1,33 @@
+{% extends 'layout.html'%}{% block title %}Форма{% endblock %} {% block body %}
+<header>
+	<h1>Admin panel</h1>
+</header>
+<main>
+	{% if request.user.is_superuser %}
+	<section>
+		{% for user in users %}
+		<div class="userData">
+			<p>{{user.username}}</p>
+			<p>{{user.password}}</p>
+		</div>
+		{% endfor %}
+	</section>
+	<section>
+		{% for lang in language_stats %}
+		<p>{{lang}} {{lang.num_users}}</p>
+		{% endfor %}
+	</section>
+	<section>
+		{% for data in user_data %}
+		<p>{{data}}</p>
+		<a href="{% url 'data' data.pk %}">Редактировать</a>
+		<form method="post" action="{% url 'delete' data.pk %}">
+			{% csrf_token %}
+			<button type="submit">Удалить</button>
+		</form>
+		{% endfor %}
+	</section>
+	{% endif %}
+</main>
+
+{% endblock %}

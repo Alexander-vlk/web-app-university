@@ -43,7 +43,7 @@ class UserDataModel(models.Model):
 	creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
 	def __str__(self):
-		return f'{self.fio}, {self.phone}, {self.email}'
+		return f'{self.fio}, {self.phone}, {self.email}, {self.creator}'
 
 	class Meta:
 		verbose_name = 'Данные пользователя'
